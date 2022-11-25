@@ -87,7 +87,18 @@
     </section>
   </main>
 
+  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+    <script>
+      window.TrackJS && TrackJS.install({ 
+      token: "ab490467d44c493a9d40e29f939680eb"
+      // for more configuration options, see https://docs.trackjs.com
+    });
+  </script>
+                        
+
   <script>
+    TrackJS.track('Testing TrackJS!');
+                        
     let form = document.querySelector('form');
     form.addEventListener('submit', e => {
       e.preventDefault();
@@ -95,13 +106,112 @@
       let firstNum = document.querySelector('#first-num').value;
       let secondNum = document.querySelector('#second-num').value;
       let operator = document.querySelector('#operator').value;
-      output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
+      try{
+        output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
+      }
+      catch(err){
+        throw new SyntaxError("You can't do that silly");
+      }
+      finally{
+        console.log("How about another?");
+      }
     });
+
+    class RandomError extends Error {
+      constructor(message) {
+      super(message); // (1)
+      this.name = "RandomError"; // (2)
+      }
+    }
+
+    function test(){
+      throw new RandomError("Boom Boom Clap, Boom de clap de clap");
+    }
+
+
 
     let errorBtns = Array.from(document.querySelectorAll('#error-btns > button'));
 
     // Start your code here
     // You may move this JS to another file if you wish
+
+    errorBtns[0].addEventListener('click', () => {
+      console.log("This is a console log");
+    });
+
+    errorBtns[1].addEventListener('click', () => {
+      console.error("You really should NOT be doing that");
+    });
+
+    errorBtns[2].addEventListener('click', () => {
+      console.count("Let's count!");
+    });
+
+    errorBtns[3].addEventListener('click', () => {
+      console.warn("Tornado, Tornado, Tornado");
+    });
+
+    errorBtns[4].addEventListener('click', () => {
+      //assert only triggers if the boolean is false
+      console.assert(false, "You do know this only appears if something is wrong right?");
+    });
+
+    errorBtns[5].addEventListener('click', () => {
+      console.clear();
+    });
+
+    errorBtns[6].addEventListener('click', () => {
+      console.dir(errorBtns[6]);
+    });
+
+    errorBtns[7].addEventListener('click', () => {
+      console.dirxml(errorBtns[7]);
+    });
+
+    errorBtns[8].addEventListener('click', () => {
+      console.group("I think we should hangout");
+    });
+
+    errorBtns[9].addEventListener('click', () => {
+      console.groupEnd();
+    });
+
+    errorBtns[10].addEventListener('click', () => {
+      console.table(
+        ["CSE110", "CSE101", "MGT45"]
+      );
+    });
+
+    errorBtns[11].addEventListener('click', () => {
+      console.time("And.... GO");
+    });
+
+    errorBtns[12].addEventListener('click', () => {
+      console.timeEnd("And.... GO");
+    });
+
+    errorBtns[13].addEventListener('click', () => {
+      function Fall(){
+        function I(){
+          function If (){
+            function Happens (){
+              function What(){
+                console.trace()
+              }
+              What();
+            }
+            Happens();
+          }
+          If();
+        }
+        I();
+      }
+      Fall();
+    });
+
+    errorBtns[14].addEventListener('click', () => {
+      throw new RandomError("Boom Boom Clap, Boom de clap de clap");
+    });
   </script>
 </body>
 
